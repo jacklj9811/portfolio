@@ -1,0 +1,36 @@
+{
+  "name": "Liangjie Lu — Data Scientist",
+  "tagline": "Statistical rigor • Production-grade analytics • Clear business impact",
+  "description": "Portfolio of Liangjie Lu: data science, statistical modeling, and decision support.",
+  "social": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/jacklj9811"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/liangjie-lu-b99856238/"
+    },
+    {
+      "label": "Email",
+      "href": "mailto:you@example.com"
+    }
+  ],
+  "highlights": [
+    {
+      "kicker": "Experience",
+      "title": "7+ years Python/R",
+      "meta": "SAS certified"
+    },
+    {
+      "kicker": "Credibility",
+      "title": "Fudan (B.S.) + UC Davis (M.S. Stats)",
+      "meta": "GPA 3.86"
+    },
+    {
+      "kicker": "Impact",
+      "title": "Healthcare, e‑commerce, env. analytics",
+      "meta": "end‑to‑end delivery"
+    }
+  ]
+}

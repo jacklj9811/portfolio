@@ -1,0 +1,54 @@
+[
+  {
+    "title": "Clinical Risk Prediction",
+    "domain": "Healthcare",
+    "summary": "Cleaned 300k+ EHRs; engineered features; built interpretable risk model.",
+    "highlights": [
+      "Logistic Reg + XGBoost + RF",
+      "SHAP explanations for clinicians"
+    ],
+    "stack": [
+      "R",
+      "SAS",
+      "Python",
+      "XGBoost",
+      "SHAP"
+    ],
+    "metrics": "AUC ↑ 0.84 → 0.90; PPV +12% at fixed recall",
+    "href": "#"
+  },
+  {
+    "title": "Stormwater GSI Policy Analytics",
+    "domain": "Public Policy",
+    "summary": "Regression linking municipal capacity to GSI-supportive policies.",
+    "highlights": [
+      "Data wrangling",
+      "Statistical inference",
+      "Reporting"
+    ],
+    "stack": [
+      "R",
+      "Stata",
+      "Quarto"
+    ],
+    "metrics": "Explained 62% variance; reproducible report",
+    "href": "#"
+  },
+  {
+    "title": "E‑commerce FM Segmentation",
+    "domain": "Retail",
+    "summary": "RFM/FM customer segmentation with dashboard for marketing actions.",
+    "highlights": [
+      "Cohort analysis",
+      "Churn signals",
+      "CLV sketch"
+    ],
+    "stack": [
+      "Python",
+      "Pandas",
+      "Plotly"
+    ],
+    "metrics": "Uplift +9% CTR in campaign",
+    "href": "#"
+  }
+]

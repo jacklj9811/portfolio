@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Exploratory & Data Audit",
+    "summary": "End‑to‑end profiling and data quality report.",
+    "points": [
+      "Schema & type detection",
+      "Missingness & outliers",
+      "Bias checks"
+    ]
+  },
+  {
+    "title": "Modeling & Evaluation",
+    "summary": "From baseline to tuned models with sound validation.",
+    "points": [
+      "CV strategy, leakage control",
+      "Interpretability (SHAP/ICE)",
+      "Error analysis"
+    ]
+  },
+  {
+    "title": "Delivery & Reporting",
+    "summary": "Actionable dashboards and business narratives.",
+    "points": [
+      "Plotly/ECharts dashboards",
+      "Notebooks & slides",
+      "Handover & docs"
+    ]
+  }
+]
