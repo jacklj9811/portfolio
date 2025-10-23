@@ -12,15 +12,32 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname();
   return (
-    <header className="sticky top-0 z-30 backdrop-blur bg-white/70 border-b">
-      <nav className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="font-semibold tracking-tight">DS Portfolio</Link>
-        <div className="flex gap-6 text-sm">
-          {links.map(l => (
-            <Link key={l.href} href={l.href} className={pathname === l.href ? "font-medium" : "text-gray-600 hover:text-gray-900"}>
-              {l.label}
-            </Link>
-          ))}
+    <header className="sticky top-0 z-30 border-b border-white/40 bg-white/60 backdrop-blur-xl">
+      <nav className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6 sm:px-10 lg:px-12">
+        <Link
+          href="/"
+          className="text-sm font-semibold tracking-[0.18em] text-slate-700 transition hover:text-slate-900"
+        >
+          DS PORTFOLIO
+        </Link>
+        <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
+          {links.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`relative transition hover:text-slate-900 ${
+                  active ? "text-slate-900" : ""
+                }`}
+              >
+                {l.label}
+                {active && (
+                  <span className="absolute -bottom-2 left-0 h-px w-full bg-gradient-to-r from-slate-900 via-slate-500 to-transparent" />
+                )}
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </header>
