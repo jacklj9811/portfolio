@@ -31,9 +31,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           >
             <div className="wave-background">
-              <div className="wave wave-one" />
-              <div className="wave wave-two" />
-              <div className="wave wave-three" />
+              <div className="wave-horizon" />
+              <div className="wave-layer wave-layer-one" />
+              <div className="wave-layer wave-layer-two" />
+              <div className="wave-layer wave-layer-three" />
+              <div className="wave-sparkles">
+                <span />
+                <span />
+                <span />
+                <span />
+              </div>
             </div>
           </div>
           <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-white/70 via-white/40 to-transparent" />
