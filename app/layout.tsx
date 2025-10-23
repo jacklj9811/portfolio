@@ -26,6 +26,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className={`${font.variable} min-h-screen bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),rgba(241,242,247,0.9)),linear-gradient(180deg,#f9fafb,#eef1f7)] text-slate-900 antialiased`}
       >
         <div className="relative flex min-h-screen flex-col">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+          >
+            <div className="wave-background">
+              <div className="wave wave-one" />
+              <div className="wave wave-two" />
+              <div className="wave wave-three" />
+            </div>
+          </div>
           <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-white/70 via-white/40 to-transparent" />
           <Navbar />
           <main className="relative mx-auto w-full max-w-6xl flex-1 px-6 pb-24 pt-24 sm:px-10 lg:px-12">
