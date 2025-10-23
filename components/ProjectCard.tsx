@@ -1,21 +1,44 @@
 
 export default function ProjectCard({ p } : { p: any }) {
   return (
-    <a href={p.href || "#"} className="block rounded-2xl border p-4 hover:shadow-sm transition">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold">{p.title}</h3>
-        <div className="text-xs px-2 py-1 rounded bg-gray-100">{p.domain}</div>
+    <a
+      href={p.href || "#"}
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/50 bg-white/80 p-6 shadow-[0_20px_55px_-38px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-40px_rgba(15,23,42,0.5)]"
+    >
+      <span className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-white/20 opacity-0 transition group-hover:opacity-100" />
+      <div className="relative flex items-start justify-between gap-4">
+        <h3 className="text-lg font-semibold text-slate-900">{p.title}</h3>
+        {p.domain && (
+          <div className="rounded-full border border-white/60 bg-slate-100/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+            {p.domain}
+          </div>
+        )}
       </div>
-      <p className="text-sm text-gray-600 mt-1">{p.summary}</p>
-      <ul className="text-sm mt-3 list-disc pl-5 space-y-1">
-        {p.highlights?.map((h: string, i: number) => <li key={i}>{h}</li>)}
+      <p className="relative mt-3 text-sm leading-relaxed text-slate-600">{p.summary}</p>
+      <ul className="relative mt-5 space-y-2 text-sm text-slate-600">
+        {p.highlights?.map((h: string, i: number) => (
+          <li key={i} className="flex items-start gap-2">
+            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400/70" />
+            <span>{h}</span>
+          </li>
+        ))}
       </ul>
-      <div className="flex gap-2 mt-3 flex-wrap">
-        {p.stack?.map((s: string, i: number) => <span key={i} className="text-xs text-gray-600 border rounded px-2 py-1">{s}</span>)}
-      </div>
+      {p.stack?.length > 0 && (
+        <div className="relative mt-6 flex flex-wrap gap-2">
+          {p.stack.map((s: string, i: number) => (
+            <span
+              key={i}
+              className="rounded-full border border-white/60 bg-white/70 px-3 py-1 text-xs font-medium text-slate-500"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+      )}
       {p.metrics && (
-        <div className="mt-3 text-sm text-gray-700">
-          <strong>Impact:</strong> {p.metrics}
+        <div className="relative mt-6 text-sm font-medium text-slate-700">
+          <span className="text-xs uppercase tracking-[0.3em] text-slate-400">Impact</span>
+          <p className="mt-2 text-slate-600">{p.metrics}</p>
         </div>
       )}
     </a>
