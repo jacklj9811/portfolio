@@ -36,6 +36,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <div className="wave-layer wave-layer-one" />
               <div className="wave-layer wave-layer-two" />
               <div className="wave-layer wave-layer-three" />
+              <div className="wave-layer wave-layer-four" />
+              <div className="wave-layer wave-layer-five" />
               <div className="wave-sparkles">
                 <span />
                 <span />
