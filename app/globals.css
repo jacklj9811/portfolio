@@ -41,7 +41,7 @@ body {
     transparent 70%
   );
   filter: blur(80px);
-  opacity: 0.6;
+  opacity: 0.8;
   animation: hazePulse 26s ease-in-out infinite;
 }
 
@@ -77,9 +77,9 @@ body {
     )
     padding-box,
     radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.45), transparent 55%) border-box;
-  opacity: 0.55;
+  opacity: 0.85;
   mix-blend-mode: screen;
-  filter: saturate(1.1) drop-shadow(0 32px 68px rgba(15, 23, 42, 0.25));
+  filter: saturate(1.4) brightness(1.1) drop-shadow(0 40px 90px rgba(15, 23, 42, 0.3));
   mask-image: radial-gradient(140% 120% at 50% 12%, #000 42%, transparent 76%);
   -webkit-mask-image: radial-gradient(140% 120% at 50% 12%, #000 42%, transparent 76%);
   overflow: hidden;
@@ -155,7 +155,7 @@ body {
     rgba(255, 255, 255, 0.25) 42%,
     transparent 70%
   );
-  opacity: 0.24;
+  opacity: 0.4;
   filter: blur(0.8px);
   animation: sparkleDrift 18s ease-in-out infinite;
 }
