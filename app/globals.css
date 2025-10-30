@@ -390,3 +390,283 @@ body {
     opacity: 0.5;
   }
 }
+
+
+/* ① 更快的速度 + 更大幅度 */
+@keyframes waveSurgeOne {
+  0%   { transform: translate3d(-50%, -26px, 0) scaleX(1.015) skewX(-2deg); }
+  50%  { transform: translate3d(-50%,  22px, 0) scaleX(0.985) skewX(2deg); }
+  100% { transform: translate3d(-50%, -26px, 0) scaleX(1.015) skewX(-2deg); }
+}
+@keyframes waveSurgeTwo {
+  0%   { transform: translate3d(-50%, -20px, 0) scaleX(1.01)  skewX(-1.6deg); }
+  50%  { transform: translate3d(-50%,  18px, 0) scaleX(0.99)  skewX(1.6deg); }
+  100% { transform: translate3d(-50%, -20px, 0) scaleX(1.01)  skewX(-1.6deg); }
+}
+@keyframes waveSurgeThree {
+  0%   { transform: translate3d(-50%, -16px, 0) scaleX(1.008) skewX(-1.4deg); }
+  50%  { transform: translate3d(-50%,  14px, 0) scaleX(0.992) skewX(1.4deg); }
+  100% { transform: translate3d(-50%, -16px, 0) scaleX(1.008) skewX(-1.4deg); }
+}
+@keyframes waveSurgeFour {
+  0%   { transform: translate3d(-50%, -12px, 0) scaleX(1.006) skewX(-1.2deg); }
+  50%  { transform: translate3d(-50%,  12px, 0) scaleX(0.994) skewX(1.2deg); }
+  100% { transform: translate3d(-50%, -12px, 0) scaleX(1.006) skewX(-1.2deg); }
+}
+@keyframes waveSurgeFive {
+  0%   { transform: translate3d(-50%, -10px, 0) scaleX(1.004) skewX(-1deg); }
+  50%  { transform: translate3d(-50%,  10px, 0) scaleX(0.996) skewX(1deg); }
+  100% { transform: translate3d(-50%, -10px, 0) scaleX(1.004) skewX(-1deg); }
+}
+
+/* 顶层高光与地平线、雾气也加快一点 */
+@keyframes crestFlash {
+  0%,100% { opacity: 0.75; transform: translateY(-6px); }
+  50%     { opacity: 0.92; transform: translateY( 8px); }
+}
+@keyframes hazePulse {
+  0%,100% { transform: translateY(-8px) scale(1.02); opacity: 0.72; }
+  50%     { transform: translateY( 6px)  scale(1.00); opacity: 0.88; }
+}
+@keyframes horizonGlow {
+  0%      { filter: blur(52px) brightness(0.95); opacity: 0.48; }
+  100%    { filter: blur(62px) brightness(1.1);  opacity: 0.62; }
+}
+
+/* ② 细化并加速水纹理，提升“峰谷密度”的观感 */
+.wave-layer::after {
+  /* 把 18px/36px/54px 改细，频率更高 */
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(241,245,249,0.14) 0 6px,
+    rgba(37,99,235,0.12)   6px 12px,
+    rgba(8,145,178,0.12)  12px 18px
+  );
+  opacity: 0.34;            /* 纹理稍微更明显 */
+  animation: waveTexture 12s linear infinite; /* 从 26s → 12s */
+  background-size: 200% 100%;                /* 让移动更“长” */
+}
+@keyframes waveTexture {
+  0%   { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ③ 调快所有层的总体速度（你原本是 28~44s，这里整体提速） */
+.wave-layer-one   { animation-duration: 16s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-two   { animation-duration: 18s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-three { animation-duration: 20s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-four  { animation-duration: 22s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-five  { animation-duration: 24s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+
+/* 顶层整体更“活跃”，颜色略微更亮，增强峰感 */
+.wave-layer-one {
+  filter: saturate(1.45) brightness(1.1) drop-shadow(0 36px 100px rgba(15,23,42,.34));
+}
+
+/* 让每层是“水平带状”，而不是椭圆团块 */
+.wave-layer {
+  /* 保持你的定位与尺寸策略，改造形状与遮罩 */
+  border-radius: 0 0 36% 36% / 0 0 18% 18%;  /* 顶边变平，只有底缘圆润 */
+  background:
+    linear-gradient(180deg,
+      rgba(59,130,246,0.55) 0%,
+      rgba(14,165,233,0.22) 100%
+    ) padding-box; /* 去掉那层径向高光，避免“圆心提亮” */
+  /* 用 纵向 线性遮罩淡出底缘（替换原先的径向遮罩）*/
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  /* 提一点对比但别过曝 */
+  mix-blend-mode: screen;
+  filter: saturate(1.25) brightness(1.06) drop-shadow(0 28px 80px rgba(15,23,42,.28));
+  overflow: hidden;
+}
+
+/* 波峰高光：把“径向”高光改成“沿顶边的线性高光”，避免团块感 */
+.wave-layer::before {
+  content: "";
+  position: absolute;
+  inset: -8% 0 58% 0; /* 只覆盖上半段，贴近顶边 */
+  background: linear-gradient(to bottom, rgba(255,255,255,.75), rgba(255,255,255,0) 70%);
+  mix-blend-mode: screen;
+  opacity: .75;
+  animation: crestFlash 12s ease-in-out infinite;
+}
+
+/* 细纹理：频率更高、速度更快，增强“层层叠叠”的观感 */
+.wave-layer::after {
+  content: "";
+  position: absolute;
+  inset: -20% -30%;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(241,245,249,.14) 0   6px,
+    rgba(37,99,235,.12)   6px 12px,
+    rgba(8,145,178,.12)  12px 18px
+  );
+  opacity: .32;
+  mix-blend-mode: soft-light;
+  animation: waveTexture 12s linear infinite;
+  background-size: 220% 100%;
+}
+@keyframes waveTexture {
+  0%   { background-position:   0% 0; }
+  100% { background-position: 220% 0; }
+}
+
+/* 速度整体提快（覆盖你原来的 28~44s） */
+.wave-layer-one   { animation-duration: 16s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-two   { animation-duration: 18s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-three { animation-duration: 20s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-four  { animation-duration: 22s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+.wave-layer-five  { animation-duration: 24s; animation-timing-function: cubic-bezier(.42,0,.58,1); }
+
+/* 更“像海浪”的上下起伏 + 轻微水平挤压（有相位差） */
+@keyframes waveSurgeOne   { 0%{transform:translate3d(-50%,-26px,0) scaleX(1.015)} 50%{transform:translate3d(-50%,22px,0) scaleX(0.985)} 100%{transform:translate3d(-50%,-26px,0) scaleX(1.015)} }
+@keyframes waveSurgeTwo   { 0%{transform:translate3d(-50%,-20px,0) scaleX(1.010)} 50%{transform:translate3d(-50%,18px,0) scaleX(0.990)} 100%{transform:translate3d(-50%,-20px,0) scaleX(1.010)} }
+@keyframes waveSurgeThree { 0%{transform:translate3d(-50%,-16px,0) scaleX(1.008)} 50%{transform:translate3d(-50%,14px,0) scaleX(0.992)} 100%{transform:translate3d(-50%,-16px,0) scaleX(1.008)} }
+@keyframes waveSurgeFour  { 0%{transform:translate3d(-50%,-12px,0) scaleX(1.006)} 50%{transform:translate3d(-50%,12px,0) scaleX(0.994)} 100%{transform:translate3d(-50%,-12px,0) scaleX(1.006)} }
+@keyframes waveSurgeFive  { 0%{transform:translate3d(-50%,-10px,0) scaleX(1.004)} 50%{transform:translate3d(-50%,10px,0) scaleX(0.996)} 100%{transform:translate3d(-50%,-10px,0) scaleX(1.004)} }
+
+/* 高光/地平线呼吸动画，也稍微快一点 */
+@keyframes crestFlash { 0%,100%{opacity:.72; transform:translateY(-6px)} 50%{opacity:.9; transform:translateY(8px)} }
+@keyframes hazePulse  { 0%,100%{transform:translateY(-8px) scale(1.02); opacity:.72} 50%{transform:translateY(6px) scale(1.00); opacity:.88} }
+@keyframes horizonGlow{ 0%{filter:blur(52px) brightness(.95); opacity:.48} 100%{filter:blur(62px) brightness(1.1); opacity:.62} }
+
+
+/* ========= 1) 通用：把团块改成“正弦顶边的水平带状波” ========= */
+
+/* 正弦遮罩（data-URL），白色区域可见、其上方透明；横向可平铺 */
+:root {
+  --wave-mask: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='none'>\
+  <!-- 顶边：三段连绵波峰波谷（可见区域在曲线以下）-->\
+  <path d='M0,80 \
+           C150,120 300,40 450,80 \
+           C600,120 750,40 900,80 \
+           C1050,120 1200,40 1200,80 \
+           V200 H0 Z' fill='white'/>\
+</svg>");
+}
+
+/* 改造每一层为“水平带状 + 正弦遮罩” */
+.wave-layer {
+  /* 去掉原来的椭圆外形与径向遮罩 */
+  border-radius: 0 0 32% 32% / 0 0 16% 16%;
+  background:
+    linear-gradient(180deg,
+      rgba(59,130,246,0.55) 0%,
+      rgba(14,165,233,0.22) 100%
+    ) padding-box;
+
+  /* 关键：使用正弦遮罩，横向平铺并流动 */
+  -webkit-mask-image: var(--wave-mask);
+          mask-image: var(--wave-mask);
+  -webkit-mask-repeat: repeat-x;
+          mask-repeat: repeat-x;
+  -webkit-mask-size: var(--wave-length, 520px) var(--wave-amp, 120px);
+          mask-size: var(--wave-length, 520px) var(--wave-amp, 120px);
+  -webkit-mask-position: 0 0;
+          mask-position: 0 0;
+
+  /* 底部做轻微羽化：再叠一层纵向渐隐遮罩（WebKit 需要单独声明）*/
+  -webkit-mask-image:
+      var(--wave-mask),
+      linear-gradient(to bottom, #000 70%, transparent 100%);
+          mask-image:
+      var(--wave-mask),
+      linear-gradient(to bottom, #000 70%, transparent 100%);
+  /* 让两张遮罩“相交” */
+  -webkit-mask-composite: source-over, source-in; /* Safari 私有 */
+          mask-composite: add, intersect;         /* 其他浏览器近似 */
+  /* 柔和提亮即可，避免过曝 */
+  mix-blend-mode: screen;
+  filter: saturate(1.25) brightness(1.06) drop-shadow(0 28px 80px rgba(15,23,42,.28));
+  overflow: hidden;
+}
+
+/* 顶缘高光：改为沿顶边的线性高光，避免“圆心提亮” */
+.wave-layer::before{
+  content:"";
+  position:absolute;
+  inset:-6% 0 60% 0;
+  background:linear-gradient(to bottom, rgba(255,255,255,.8), rgba(255,255,255,0) 70%);
+  mix-blend-mode:screen;
+  opacity:.8;
+  animation: crestFlash 10s ease-in-out infinite;
+}
+
+/* 细纹理：提升空间频率与速度 */
+.wave-layer::after{
+  content:"";
+  position:absolute;
+  inset:-20% -30%;
+  background:repeating-linear-gradient(
+    90deg,
+    rgba(241,245,249,.14) 0   6px,
+    rgba(37,99,235,.12)   6px 12px,
+    rgba(8,145,178,.12)  12px 18px
+  );
+  opacity:.32;
+  mix-blend-mode:soft-light;
+  animation: waveTexture 12s linear infinite;
+  background-size:220% 100%;
+}
+
+/* ========= 2) 动画：遮罩水平流动 + 整层轻微上下起伏 ========= */
+
+@keyframes waveFlow   { from { -webkit-mask-position: 0 0; mask-position: 0 0; } to { -webkit-mask-position: -1200px 0; mask-position: -1200px 0; } }
+@keyframes waveBob    { 0%,100% { transform: translate3d(-50%, -10px, 0); } 50% { transform: translate3d(-50%, 12px, 0); } }
+@keyframes crestFlash { 0%,100% { opacity:.7; transform: translateY(-4px); } 50% { opacity:.92; transform: translateY(6px); } }
+@keyframes waveTexture{ 0% { background-position: 0 0; } 100% { background-position: 220% 0; } }
+
+/* ========= 3) 各层参数：不同振幅/波长/速度/相位 ========= */
+/* 说明：
+   --wave-length 越小，波峰越密；--wave-amp 越大，起伏越大。
+   waveFlow 控制“水平流速”；waveBob 控制“上下起伏”。 */
+
+.wave-layer-one{
+  --wave-length: 520px;
+  --wave-amp:    120px;
+  animation:
+    waveFlow 8s  linear infinite,
+    waveBob  5.5s ease-in-out infinite;
+  animation-delay: -8s, -2s; /* 保留你原来的相位差 */
+  filter: saturate(1.4) brightness(1.08) drop-shadow(0 36px 100px rgba(15,23,42,.32));
+}
+
+.wave-layer-two{
+  --wave-length: 560px;
+  --wave-amp:    110px;
+  animation:
+    waveFlow 10s linear infinite,
+    waveBob  6.2s ease-in-out infinite;
+  animation-delay: -14s, -1s;
+}
+
+.wave-layer-three{
+  --wave-length: 600px;
+  --wave-amp:    100px;
+  mix-blend-mode: lighten;
+  animation:
+    waveFlow 12s linear infinite,
+    waveBob  7s   ease-in-out infinite;
+  animation-delay: -20s, -3s;
+}
+
+.wave-layer-four{
+  --wave-length: 640px;
+  --wave-amp:     90px;
+  animation:
+    waveFlow 14s linear infinite,
+    waveBob  7.8s ease-in-out infinite;
+  animation-delay: -10s, -1.5s;
+}
+
+.wave-layer-five{
+  --wave-length: 680px;
+  --wave-amp:     80px;
+  animation:
+    waveFlow 16s linear infinite,
+    waveBob  8.6s ease-in-out infinite;
+  animation-delay: -24s, -2.5s;
+}
